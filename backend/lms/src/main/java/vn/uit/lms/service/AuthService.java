@@ -3,9 +3,11 @@ package vn.uit.lms.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,8 +16,11 @@ import vn.uit.lms.core.entity.*;
 import vn.uit.lms.core.repository.*;
 import vn.uit.lms.shared.constant.AccountStatus;
 import vn.uit.lms.shared.constant.Role;
+import vn.uit.lms.shared.constant.SecurityConstants;
 import vn.uit.lms.shared.constant.TokenType;
+import vn.uit.lms.shared.dto.request.ChangePasswordDTO;
 import vn.uit.lms.shared.dto.request.ReqLoginDTO;
+import vn.uit.lms.shared.dto.response.MeResponse;
 import vn.uit.lms.shared.dto.response.ResLoginDTO;
 import vn.uit.lms.shared.exception.*;
 import vn.uit.lms.shared.mapper.AccountMapper;
@@ -167,22 +172,31 @@ public class AuthService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         ResLoginDTO resLoginDTO = new ResLoginDTO();
-        Account accountDB = accountRepository.findOneByEmailIgnoreCase(authentication.getName())
+        String email = authentication.getName();
+        Account accountDB = accountRepository.findOneByEmailIgnoreCase(email)
                 .orElseThrow(() -> new ResourceNotFoundException("Account not found"));
 
         // Map account to response DTO depending on role
-        if(accountDB.getRole() == Role.STUDENT) {
+        switch (accountDB.getRole()) {
+            case STUDENT -> {
+                Student student = studentRepository.findByAccount(accountDB)
+                        .orElseThrow(() -> new UserNotActivatedException("Account not activated"));
+                resLoginDTO = AccountMapper.studentToResLoginDTO(student);
+            }
 
-            Student student = studentRepository.findByAccount(accountDB).orElseThrow(
-                    () -> new UserNotActivatedException("Account not activated"));
+            case TEACHER -> {
+                Teacher teacher = teacherRepository.findByAccount(accountDB)
+                        .orElseThrow(() -> new UserNotActivatedException("Account not activated"));
+                resLoginDTO = AccountMapper.teacherToResLoginDTO(teacher);
+            }
 
-            resLoginDTO = AccountMapper.studentToResLoginDTO(student);
-        } else if(accountDB.getRole() == Role.TEACHER) {
-            Teacher teacher = teacherRepository.findByAccount(accountDB).orElseThrow(
-                    () -> new UserNotActivatedException("Account not activated"));
+            case ADMIN -> {
+                resLoginDTO = AccountMapper.adminToResLoginDTO(accountDB);
+            }
 
-            resLoginDTO = AccountMapper.teacherToResLoginDTO(teacher);
+            default -> throw new IllegalStateException("Unexpected role: " + accountDB.getRole());
         }
+
 
         // Generate access token
         String accessToken = securityUtils.createAccessToken(authentication.getName(), resLoginDTO);
@@ -205,6 +219,9 @@ public class AuthService {
 
         resLoginDTO.setRefreshToken(rawRefreshToken);
         resLoginDTO.setRefreshTokenExpiresAt(refreshToken.getExpiresAt());
+
+        accountDB.setLastLoginAt(Instant.now());
+        accountRepository.save(accountDB);
 
         return resLoginDTO;
     }
@@ -235,6 +252,7 @@ public class AuthService {
         emailService.sendPasswordResetMail(accountDB, rawToken);
     }
 
+    @Transactional
     public void resetPassword(String token, String newPassword) {
         log.info("Start resetting password with token: {}", token);
         String hashToken = TokenHashUtil.hashToken(token);
@@ -279,6 +297,75 @@ public class AuthService {
         log.info("Password reset successfully for account id={}", account.getId());
 
     }
+
+    public MeResponse getCurrentUserInfo() {
+        String email = SecurityUtils.getCurrentUserLogin()
+                .filter(e -> !SecurityConstants.ANONYMOUS_USER.equals(e))
+                .orElseThrow(() -> new UnauthorizedException("User not authenticated") {
+                });
+
+        Account account = accountRepository.findOneByEmailIgnoreCase(email)
+                .orElseThrow(() -> new ResourceNotFoundException("Account not found"));
+
+        MeResponse meResponse = buildBaseResponse(account);
+
+        BaseProfile profile = switch (account.getRole()) {
+            case STUDENT -> studentRepository.findByAccount(account)
+                    .orElseThrow(() -> new UserNotActivatedException("Account not activated"));
+            case TEACHER -> teacherRepository.findByAccount(account)
+                    .orElseThrow(() -> new UserNotActivatedException("Account not activated"));
+            default -> null;
+        };
+
+        if (profile != null) fillUserProfile(meResponse, profile);
+
+        return meResponse;
+    }
+
+    private MeResponse buildBaseResponse(Account account) {
+        return MeResponse.builder()
+                .accountId(account.getId())
+                .username(account.getUsername())
+                .email(account.getEmail())
+                .role(account.getRole())
+                .avatarUrl(account.getAvatarUrl())
+                .lastLoginAt(account.getLastLoginAt())
+                .status(account.getStatus())
+                .build();
+    }
+
+    private void fillUserProfile(MeResponse meResponse, BaseProfile profile) {
+        meResponse.setFullName(profile.getFullName());
+        meResponse.setGender(profile.getGender());
+        meResponse.setBio(profile.getBio());
+        meResponse.setBirthday(profile.getBirthDate());
+    }
+
+    @Transactional
+    public void changePassword(ChangePasswordDTO changePasswordDTO) {
+
+        if (changePasswordDTO.getOldPassword().equals(changePasswordDTO.getNewPassword())) {
+            throw new InvalidPasswordException("New password must be different from old password");
+        }
+
+        String email = SecurityUtils.getCurrentUserLogin()
+                .filter(e -> !SecurityConstants.ANONYMOUS_USER.equals(e))
+                .orElseThrow(() -> new UnauthorizedException("User not authenticated"));
+
+
+        Account account = accountRepository.findOneByEmailIgnoreCase(email)
+                .orElseThrow(() -> new ResourceNotFoundException("Account not found"));
+
+        if (!passwordEncoder.matches(changePasswordDTO.getOldPassword(), account.getPasswordHash())) {
+            throw new InvalidPasswordException("Old password does not match");
+        }
+
+
+        account.setPasswordHash(passwordEncoder.encode(changePasswordDTO.getNewPassword()));
+        accountRepository.save(account);
+    }
+
+
 
 
 }

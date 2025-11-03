@@ -1,0 +1,737 @@
+{
+	"info": {
+		"_postman_id": "39937345-74ca91f4-591a-447c-b4ed-5d4e19e8d0b7",
+		"name": "online-course-management-system",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Module Auth",
+			"item": [
+				{
+					"name": "register new account",
+					"id": "39937345-92095b5f-b223-4c61-a9ff-055786339a53",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"trinhhoa\",\r\n    \"email\": \"trinhhoa.gl2005@gmail.com\",\r\n    \"password\": \"123456\",\r\n    \"role\": \"teacher\",\r\n    \"langKey\": \"vi\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/v1/auth/register",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verify email",
+					"id": "39937345-60ba77c6-e437-432d-b58f-63ba532840bb",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/v1/auth/verify-email?token",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"verify-email"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": null,
+									"type": "text"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"id": "39937345-a1bfb8e6-5f32-4022-89ec-217a3af81d1f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    // email or username\r\n    \"login\": \"admin\",\r\n    \"password\": \"Admin@123\",\r\n    \"deviceInfo\": \"Windows 10 Chrome 142.0\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/v1/auth/login",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"id": "39937345-07f9491e-ff9c-4f00-a9e8-3d676ea6d906",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsbXMtc3lzdGVtIiwic3ViIjoidHJpbmhob2EuZ2wyMDA1QGdtYWlsLmNvbSIsImV4cCI6MTc2MTQxMTY2MywidG9rZW5fdHlwZSI6InJlZnJlc2giLCJpYXQiOjE3NjEzMTE2NjN9.L2rBcLT6BPbV6By6eB23nk6aw9obUl4kREqvY2pBdcA\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/v1/auth/logout",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "refresh token",
+					"id": "39937345-0f284760-1b45-4710-a23b-ecfea10b6146",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsbXMtc3lzdGVtIiwic3ViIjoidHJpbmhob2EuZ2wyMDA1QGdtYWlsLmNvbSIsImV4cCI6MTc2MTQxMTY2MywidG9rZW5fdHlwZSI6InJlZnJlc2giLCJpYXQiOjE3NjEzMTE2NjN9.L2rBcLT6BPbV6By6eB23nk6aw9obUl4kREqvY2pBdcA\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/v1/auth/refresh",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forgot password",
+					"id": "39937345-1e234e3c-9d84-4109-89d1-3baed370b108",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"trinhhoa.gl2005@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/v1/auth/password/forgot",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"password",
+								"forgot"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset password",
+					"id": "39937345-bcb0412d-c9ff-4059-9d77-f88021371ba0",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/v1/auth/password/reset?token",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"password",
+								"reset"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get current user login info",
+					"id": "39937345-c88c19e3-ce7f-402f-a61b-59a9c483c76a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/v1/auth/me",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change password",
+					"id": "39937345-d9567803-2b68-4776-94f9-2c1b8deeff1f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"oldPassword\": \"12345678\",\r\n    \"newPassword\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/v1/auth/password/change",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"password",
+								"change"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "39937345-45fbecf1-d116-457e-8161-444d5ed717e0"
+		},
+		{
+			"name": "Module Account",
+			"item": [
+				{
+					"name": "account action log",
+					"item": [
+						{
+							"name": "get account action logs",
+							"id": "39937345-567eb674-44f6-4453-80f8-e7bf20f69d93",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/api/v1/accounts/3/logs",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"accounts",
+										"3",
+										"logs"
+									],
+									"query": [
+										{
+											"key": "actionType",
+											"value": "APPROVE",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "39937345-3670fd23-7a55-4b51-8a2d-89e1346a19c1"
+				},
+				{
+					"name": "get profile",
+					"id": "39937345-7a5f839d-17cf-46d0-825e-c8535d62236b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/v1/accounts/me",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"accounts",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "upload avatar",
+					"id": "39937345-2781c08d-a172-4c47-af95-3152ef852691",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"uuid": "3837bdc7-34c3-4755-be96-dfbb04aef340",
+									"src": "-NI0Y-ICX/pexels-eberhardgross-1612351.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/v1/accounts/me/avatar",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"accounts",
+								"me",
+								"avatar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update profile",
+					"id": "39937345-2315ca33-2e52-4247-86f2-4889441ea163",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fullName\": \"Nguyen Van A\",\r\n  \"birthDate\": \"2000-05-12\",\r\n  \"phone\": \"0901234567\",\r\n  \"bio\": \"A passionate developer who loves teaching and sharing knowledge.\",\r\n  \"gender\": \"MALE\",\r\n\r\n  // Teacher-only fields\r\n  \"specialty\": \"Artificial Intelligence\",\r\n  \"degree\": \"Master of Computer Science\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/v1/accounts/me",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"accounts",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all account",
+					"id": "39937345-b051a82a-8bce-425b-b5c9-5c4201e7ba4c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/v1/accounts?page=0&size=1&sort=id,desc&filter=username~'*admin*'",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"accounts"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "1"
+								},
+								{
+									"key": "sort",
+									"value": "id,desc"
+								},
+								{
+									"key": "filter",
+									"value": "username~'*admin*'",
+									"type": "text"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get account profile by id",
+					"id": "39937345-f4d693fb-1ab4-4549-8ce7-c6c8eea9df3f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/v1/accounts/3",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"accounts",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "approve teacher account",
+					"id": "39937345-b9514fc2-1d06-42b9-88bd-c71d4602c3b9",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/v1/accounts/teacher/3/approve",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"accounts",
+								"teacher",
+								"3",
+								"approve"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update status account",
+					"id": "39937345-8497c79e-89e2-44d6-9107-eee8869d6901",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\":\"ACTIVE\",\r\n    \"reason\":\"tha cho đấy\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/v1/accounts/3/status",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"accounts",
+								"3",
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reject teacher account",
+					"id": "39937345-396d5e84-186b-4504-a167-e8544f96a46a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"reason\": \"fake degree\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/v1/accounts/teacher/3/reject",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"accounts",
+								"teacher",
+								"3",
+								"reject"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "soft delete account",
+					"id": "39937345-8453a387-00d3-4872-82d7-3375f1512b0b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/v1/accounts/3",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"accounts",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "39937345-f3c21d63-ea8b-4c74-8cca-84af86d9013b"
+		},
+		{
+			"name": "HelloWorld",
+			"id": "39937345-1f0f6268-4541-45f1-94e0-065f7e3b8f52",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0cmluaGhvYS5nbDIwMDVAZ21haWwuY29tIiwicGVybWlzc2lvbnMiOlsiUk9MRV9VU0VSX0NSRUFURSIsIlJPTEVfVVNFUl9VUERBVEUiXSwiaXNzIjoibG1zLXN5c3RlbSIsImV4cCI6MTc2MTM5Nzk1NSwiaWF0IjoxNzYxMzExNTU1LCJ1c2VyIjp7ImFjY291bnRJZCI6MSwidXNlcm5hbWUiOiJ0cmluaGhvYSIsImVtYWlsIjoidHJpbmhob2EuZ2wyMDA1QGdtYWlsLmNvbSIsInJvbGUiOiJURUFDSEVSIn19.IDK-S7KkIiqKijVAa7YbE4LVJ0QglbHbEb9dTftPivg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/ping",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"ping"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"id": "39937345-8d1cc498-ff25-4a9d-b867-9d2e012ce056",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"id": "39937345-de486093-dd91-44ec-826f-cc4c6b42efed",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{jwt}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "85c44b27-709c-4400-895e-8647f5110c3e",
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "25e8b967-9f4f-49a7-ad7d-91be8f0db5be",
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": ""
+		},
+		{
+			"key": "jwt",
+			"value": ""
+		}
+	]
+}

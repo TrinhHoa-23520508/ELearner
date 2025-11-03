@@ -37,6 +37,26 @@ out/
 .vscode/
 
 ### Application Properties ###
+application.yml
 application.properties
+application-*.yml
 application-*.properties
+!application.yml.example
 !application.properties.example
+
+
+# Logs
+*.log
+logs/
+*.trace
+*.stacktrace
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+*.DS_Store
+Thumbs.db
+
+# Maven / Gradle wrapper binaries
+gradle-wrapper.jar

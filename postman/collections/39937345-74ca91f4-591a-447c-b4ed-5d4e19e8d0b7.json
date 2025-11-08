@@ -633,6 +633,11 @@
 			"id": "39937345-f3c21d63-ea8b-4c74-8cca-84af86d9013b"
 		},
 		{
+			"name": "New Folder",
+			"item": [],
+			"id": "39937345-5cd62445-3a79-4155-b491-8793901bc9c6"
+		},
+		{
 			"name": "HelloWorld",
 			"id": "39937345-1f0f6268-4541-45f1-94e0-065f7e3b8f52",
 			"protocolProfileBehavior": {
@@ -660,18 +665,6 @@
 						"ping"
 					]
 				}
-			},
-			"response": []
-		},
-		{
-			"name": "New Request",
-			"id": "39937345-8d1cc498-ff25-4a9d-b867-9d2e012ce056",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": []
 			},
 			"response": []
 		}

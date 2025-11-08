@@ -634,7 +634,25 @@
 		},
 		{
 			"name": "Module Course",
-			"item": [],
+			"item": [
+				{
+					"name": "New Folder",
+					"item": [],
+					"id": "39937345-2703b417-af98-40b7-a13e-34f1dfa26ff9"
+				},
+				{
+					"name": "New Request",
+					"id": "39937345-52ee426b-5e28-41ae-8612-c717b59f63c5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			],
 			"id": "39937345-5cd62445-3a79-4155-b491-8793901bc9c6"
 		},
 		{

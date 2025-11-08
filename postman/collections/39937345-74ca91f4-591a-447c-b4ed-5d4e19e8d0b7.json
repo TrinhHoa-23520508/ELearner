@@ -649,7 +649,12 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    // email or username\r\n    \"login\": \"admin\",\r\n    \"password\": \"Admin@123\",\r\n    \"deviceInfo\": \"Windows 10 Chrome 142.0\"\r\n}"
+									"raw": "{\r\n    \"name\":\"SprinG boot\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
 								},
 								"url": {
 									"raw": "{{baseURL}}/api/v1/tags",

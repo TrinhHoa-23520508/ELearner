@@ -637,7 +637,20 @@
 			"item": [
 				{
 					"name": "Tag",
-					"item": [],
+					"item": [
+						{
+							"name": "create new tag",
+							"id": "39937345-499bf073-be72-45be-a476-0a8ef123d583",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					],
 					"id": "39937345-2703b417-af98-40b7-a13e-34f1dfa26ff9"
 				},
 				{
